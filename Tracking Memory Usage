@@ -1,0 +1,24 @@
+#Function to parse through multiple rows of a DAT file
+def parse_mprof_data(file_path):
+    total_memory_usage = 0
+    max_memory_usage = float('-inf')
+    memory_usage_count = 0
+
+    with open(file_path, 'r') as file:
+        for line in file:
+            parts = line.strip().split()
+            if len(parts) == 3 and parts[0] == 'MEM':
+                memory_usage = float(parts[1])
+                total_memory_usage += memory_usage
+                max_memory_usage = max(max_memory_usage, memory_usage)
+                memory_usage_count += 1
+
+    if memory_usage_count > 0:
+        average_memory_usage = total_memory_usage / memory_usage_count
+        print(f"Overall Average Memory Usage: {average_memory_usage:.2f} MB")
+        print(f"Maximum Memory Usage: {max_memory_usage:.2f} MB")
+    else:
+        print("No memory usage data found in the file.")
+
+mprof_data_file = r"file_path"
+parse_mprof_data(mprof_data_file)
